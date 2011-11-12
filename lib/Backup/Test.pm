@@ -23,7 +23,7 @@ sub get_files {
     last if @sample_files >= $num;
   }
 
-  return scalar(@sample_files);
+  return @sample_files;
 }
 
 1;
