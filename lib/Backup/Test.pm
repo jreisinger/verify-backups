@@ -11,19 +11,25 @@ our @EXPORT_OK = qw(get_files);
 
 sub get_files {
   my $dir = shift;
-  my $num = shift;
+  my $percentage = shift;
 
   my @files;
   # get just files, not directories
   find(sub { push @files, $File::Find::name if -f; }, "$dir");
+
+  my $total_files_number = scalar @files;
+  my $sample_files_number = $total_files_number * $percentage;
   
   my @sample_files;
   for ( @files ) {
     push @sample_files, $_;
-    last if @sample_files >= $num;
+    last if @sample_files >= $sample_files_number;
   }
 
-  return @sample_files;
+  print "Total files: ", scalar @files, "\n";
+  print "Sample files: ", scalar @sample_files, "\n";
+
+  return $total_files_number, @sample_files;
 }
 
 1;

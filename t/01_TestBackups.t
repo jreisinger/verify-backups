@@ -2,14 +2,18 @@
 
 use strict;
 use warnings;
+use POSIX;  # core module, for numbers rounding
 
 use Test::More;
 
 use_ok('Backup::Test');
 
-my $dir = '/var/tmp/svorcik';
-my $num = 5;
-is(Backup::Test::get_files($dir, $num), $num, 'Return expected number of files');
+my $dir = '/data/home';
+my $percentage = 0.1;
+my @return = Backup::Test::get_files($dir, $percentage);
+my $total_files_number = shift @return;
+my @sample_files = @return;
+is(scalar @sample_files, ceil($percentage * $total_files_number), 'Return expected number of files');
 
 TODO: {
   local $TODO = 'lebo';
