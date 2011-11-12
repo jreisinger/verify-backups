@@ -2,6 +2,7 @@ package Backup::Test;
 
 use warnings;
 use strict;
+use File::Find; # core module
 
 our $VERSION = '0.010';
 
@@ -12,9 +13,18 @@ sub get_files {
   my $dir = shift;
   my $num = shift;
 
-  return $num;
-}
+  my @files;
+  # get just files, not directories
+  find(sub { push @files, $File::Find::name if -f; }, "$dir");
+  
+  my @sample_files;
+  for ( @files ) {
+    push @sample_files, $_;
+    last if @sample_files >= $num;
+  }
 
+  return scalar(@sample_files);
+}
 
 1;
 

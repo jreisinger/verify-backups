@@ -7,8 +7,8 @@ use Test::More;
 
 use_ok('Backup::Test');
 
-my $dir = '/data/home';
-my $num = 10;
+my $dir = '/var/tmp/svorcik';
+my $num = 5;
 is(Backup::Test::get_files($dir, $num), $num, 'Return expected number of files');
 
 TODO: {
