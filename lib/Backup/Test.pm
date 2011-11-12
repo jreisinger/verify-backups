@@ -1,4 +1,4 @@
-package Math::Base4;
+package Backup::Test;
 
 use warnings;
 use strict;
@@ -6,13 +6,13 @@ use strict;
 our $VERSION = '0.010';
 
 use Exporter 'import';
-our @EXPORT_OK = qw(add4);
+our @EXPORT_OK = qw(get_files);
 
-sub add4 {
-  my $first  = shift;
-  my $second = shift;
-  
-  return $first + $second;
+sub get_files {
+  my $dir = shift;
+  my $num = shift;
+
+  return $num;
 }
 
 
