@@ -2,18 +2,30 @@
 
 use strict;
 use warnings;
-use POSIX;  # core module, for numbers rounding
+use POSIX qw(ceil);  # core module, for numbers rounding
 
 use Test::More;
 
 use_ok('Backup::Test');
 
-my $dir = '/data/home';
-my $percentage = 0.1;
-my @return = Backup::Test::get_files($dir, $percentage);
-my $total_files_number = shift @return;
-my @sample_files = @return;
-is(scalar @sample_files, ceil($percentage * $total_files_number), 'Return expected number of files');
+my $dir = '/var/tmp/x';
+
+# Test number of returned files
+for my $percentage ( 0, 0.1, 0.3 ) {
+  my @returned = Backup::Test::get_files($dir, $percentage);
+  my $total_files_number = shift @returned;
+  my @sample_files = @returned;
+  is(scalar @sample_files, ceil($percentage * $total_files_number), 'Return expected number of files');
+}
+
+# Test MD5 message digest (checksum)
+{
+  my $file = '/etc/passwd';
+  my $md5sum = `/usr/bin/md5sum $file`;
+  chomp $md5sum;
+  $md5sum =~ s/\s+.*$//;  # remove file name
+  is(Backup::Test::gen_md5sum($file), $md5sum, "MD5 checksum of '$file'");
+}
 
 TODO: {
   local $TODO = 'lebo';

@@ -2,12 +2,13 @@ package Backup::Test;
 
 use warnings;
 use strict;
-use File::Find; # core module
+use File::Find;           # core module
+use Digest::MD5 qw(md5_hex);  # core module
 
 our $VERSION = '0.010';
 
 use Exporter 'import';
-our @EXPORT_OK = qw(get_files);
+our @EXPORT_OK = qw(get_files gen_md5sum);
 
 sub get_files {
   # return total number of files in $dir  and the percentage of files
@@ -25,14 +26,24 @@ sub get_files {
   # get the sample files
   my @sample_files;
   for ( @files ) {
+    last if @sample_files > $sample_files_number or $sample_files_number == 0;
     push @sample_files, $_;
-    last if @sample_files >= $sample_files_number;
   }
 
-  print "Total files: ", scalar @files, "\n";
-  print "Sample files: ", scalar @sample_files, "\n";
-
   return $total_files_number, @sample_files;
+}
+
+sub gen_md5sum {
+  my $file = shift;
+  open(FILE, $file) or die "Can't open '$file': $!";
+  binmode(FILE);
+
+  my $md5 = Digest::MD5->new;
+  while (<FILE>) {
+    $md5->add($_);
+  }
+  close(FILE);
+  return $md5->hexdigest;
 }
 
 1;
