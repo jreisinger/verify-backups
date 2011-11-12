@@ -3,11 +3,12 @@
 use strict;
 use warnings;
 use POSIX qw(ceil);  # core module, for numbers rounding
-
 use Test::More;
 
+# Test and load module
 use_ok('Backup::Test');
 
+# Original dir
 my $dir = '/var/tmp/x';
 
 # Test number of returned files
