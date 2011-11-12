@@ -10,16 +10,19 @@ use Exporter 'import';
 our @EXPORT_OK = qw(get_files);
 
 sub get_files {
-  my $dir = shift;
-  my $percentage = shift;
+  # return total number of files in $dir  and the percentage of files
+  my $dir = shift;        # dir to search for files
+  my $percentage = shift; # percentage of files to return
 
   my @files;
   # get just files, not directories
   find(sub { push @files, $File::Find::name if -f; }, "$dir");
 
+  # calculate the percentage
   my $total_files_number = scalar @files;
   my $sample_files_number = $total_files_number * $percentage;
   
+  # get the sample files
   my @sample_files;
   for ( @files ) {
     push @sample_files, $_;
