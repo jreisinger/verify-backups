@@ -20,19 +20,11 @@ for my $percentage ( 0, 0.1, 0.3 ) {
 }
 
 # Test MD5 message digest (checksum)
-{
-  my $file = '/etc/passwd';
+for my $file ( qw( /etc/passwd /etc/hosts /etc/group ) ) {
   my $md5sum = `/usr/bin/md5sum $file`;
   chomp $md5sum;
   $md5sum =~ s/\s+.*$//;  # remove file name
   is(Backup::Test::gen_md5sum($file), $md5sum, "MD5 checksum of '$file'");
-}
-
-TODO: {
-  local $TODO = 'lebo';
-  #is(Math::Base4::add4(1,1), 2, '1+1 = 2');
-  #is(Math::Base4::add4(2,2), 10, '2+2 = 10');
-  #is(Math::Base4::add4(3,2), 10, '3+2 = 11');
 }
 
 done_testing();

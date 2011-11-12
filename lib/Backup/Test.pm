@@ -2,8 +2,8 @@ package Backup::Test;
 
 use warnings;
 use strict;
-use File::Find;           # core module
-use Digest::MD5 qw(md5_hex);  # core module
+use File::Find;   # core module
+use Digest::MD5;  # core module
 
 our $VERSION = '0.010';
 
@@ -34,6 +34,7 @@ sub get_files {
 }
 
 sub gen_md5sum {
+  # Generate MD5 checksum
   my $file = shift;
   open(FILE, $file) or die "Can't open '$file': $!";
   binmode(FILE);
