@@ -7,6 +7,7 @@ use Digest::MD5;  # core module
 
 our $VERSION = '0.010';
 
+use vars qw($VERSION @ISA @EXPORT_OK);
 use Exporter 'import';
 our @EXPORT_OK = qw(get_files gen_md5sum);
 
