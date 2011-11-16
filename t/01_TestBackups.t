@@ -16,15 +16,22 @@ for my $percentage ( 0, 0.1, 0.3 ) {
   my @returned = Backup::Test::get_files($dir, $percentage);
   my $total_files_number = shift @returned;
   my @sample_files = @returned;
-  is(scalar @sample_files, ceil($percentage * $total_files_number), 'Return expected number of files');
+  my $expected = ceil($percentage * $total_files_number);
+  is(scalar @sample_files, $expected, "Return expected number of files - $expected (sample) out of $total_files_number (total files)");
 }
 
 # Test MD5 message digest (checksum)
-for my $file ( qw( /etc/passwd /etc/hosts /etc/group ) ) {
-  my $md5sum = `/usr/bin/md5sum $file`;
-  chomp $md5sum;
-  $md5sum =~ s/\s+.*$//;  # remove file name
-  is(Backup::Test::gen_md5sum($file), $md5sum, "MD5 checksum of '$file'");
+{
+  my @returned = Backup::Test::get_files($dir, 0.1);
+  my $total_files_number = shift @returned;
+  my @sample_files = @returned;
+  for my $file ( @sample_files[0,1,2] ) {  # pick first 3 files
+    last unless $file;
+    my $md5sum = `/usr/bin/md5sum $file`;
+    chomp $md5sum;
+    $md5sum =~ s/\s+.*$//;  # remove file name
+    is(Backup::Test::gen_md5sum($file), $md5sum, "MD5 checksum of '$file'");
+  }
 }
 
 done_testing();
