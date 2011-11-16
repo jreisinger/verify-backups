@@ -2,8 +2,9 @@ package Backup::Test;
 
 use warnings;
 use strict;
-use File::Find;   # core module
-use Digest::MD5;  # core module
+use File::Find;             # core module
+use Digest::MD5;            # core module
+use List::Util qw(shuffle); # core module - to randomize list
 
 our $VERSION = '0.010';
 
@@ -12,7 +13,7 @@ use Exporter 'import';
 our @EXPORT_OK = qw(get_files gen_md5sum);
 
 sub get_files {
-  # return total number of files in $dir  and the percentage of files
+  # return total number of files in $dir and the percentage of files
   my $dir = shift;        # dir to search for files
   my $percentage = shift; # percentage of files to return
 
@@ -26,7 +27,7 @@ sub get_files {
   
   # get the sample files
   my @sample_files;
-  for ( @files ) {
+  for ( shuffle @files ) {  # randomize order of files
     last if @sample_files > $sample_files_number or $sample_files_number == 0;
     push @sample_files, $_;
   }

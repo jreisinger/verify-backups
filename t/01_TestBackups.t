@@ -26,10 +26,13 @@ for my $percentage ( 0, 0.1, 0.3 ) {
   my $total_files_number = shift @returned;
   my @sample_files = @returned;
   for my $file ( @sample_files[0,1,2] ) {  # pick first 3 files
-    last unless $file;
+    last unless $file;                     # one or more of the 3 files may be undef
+    
+    # should be more portable FIXME
     my $md5sum = `/usr/bin/md5sum $file`;
     chomp $md5sum;
-    $md5sum =~ s/\s+.*$//;  # remove file name
+    $md5sum =~ s/\s+.*$//;                 # remove file name
+    
     is(Backup::Test::gen_md5sum($file), $md5sum, "MD5 checksum of '$file'");
   }
 }
