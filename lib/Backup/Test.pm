@@ -28,7 +28,7 @@ sub get_files {
   # get the sample files
   my @sample_files;
   for ( shuffle @files ) {  # randomize order of files
-    last if @sample_files > $sample_files_number or $sample_files_number == 0;
+    last if @sample_files == $sample_files_number or $sample_files_number == 0;
     push @sample_files, $_;
   }
 
@@ -38,7 +38,8 @@ sub get_files {
 sub gen_md5sum {
   # Generate MD5 checksum
   my $file = shift;
-  open(FILE, $file) or die "Can't open '$file': $!";
+  eval { open(FILE, $file) or die "Can't open '$file': $!"; };
+  return "file '$file' not backed up" if $@;
   binmode(FILE);
 
   my $md5 = Digest::MD5->new;
