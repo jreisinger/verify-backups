@@ -28,7 +28,7 @@ sub get_files {
   # get the sample files
   my @sample_files;
   for ( shuffle @files ) {  # randomize order of files
-    last if @sample_files == $sample_files_number or $sample_files_number == 0;
+    last if @sample_files >= $sample_files_number or $sample_files_number == 0;
     push @sample_files, $_;
   }
 

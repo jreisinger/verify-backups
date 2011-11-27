@@ -9,7 +9,7 @@ use Test::More;
 use_ok('Backup::Test');
 
 # Original dir
-my $dir = '/var/tmp/x';
+my $dir = '/data/home';
 
 # Test number of returned files
 for my $percentage ( 0, 0.1, 0.3 ) {
