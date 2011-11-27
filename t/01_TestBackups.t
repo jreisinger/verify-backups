@@ -29,11 +29,11 @@ for my $percentage ( 0, 0.0001, 0.0003 ) {
     last unless $file;                     # one or more of the 3 files may be undef
     
     # should be more portable FIXME
-    my $md5sum = `/usr/bin/md5sum $file`;
+    my $md5sum = `/usr/bin/md5sum "$file"`;
     chomp $md5sum;
     $md5sum =~ s/\s+.*$//;                 # remove file name
     
-    is(Backup::Test::gen_md5sum($file), $md5sum, "MD5 checksum of '$file'");
+    is(Backup::Test::gen_md5sum("$file"), $md5sum, "MD5 checksum of '$file'");
   }
 }
 

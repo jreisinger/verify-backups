@@ -3,24 +3,24 @@ use warnings;
 use Module::Build;
 
 my $builder = Module::Build->new(
-    module_name         => 'Math::Base4',
-    license             => 'perl',
-    dist_author         => 'Bratislava Perl Mongers <bratislava-pm@pm.org>',
-    dist_version_from   => 'lib/Math/Base4.pm',
+    module_name         => 'Backup::Test',
+    license             => 'GPLv3',
+    dist_author         => 'Jozef Reisinger <jozef.reisinger@gmail.com>',
+    dist_version_from   => 'lib/Backup/Test.pm',
     requires => {
-        'File::Spec' => 0,
+        #'File::Spec' => 0,
     },
     build_requires => {
-        'Test::More' => 0,
+        #'Test::More' => 0,
     },
-    add_to_cleanup      => [ 'Math-Base4-*' ],
+    #add_to_cleanup      => [ 'Math-Base4-*' ],
     create_readme       => 1,
     meta_merge => {
         resources => {
-            repository => 'http://github.com/jozef/Math-Base4',
-            bugtracker => 'http://github.com/jozef/Math-Base4/issues',
+            repository => 'https://github.com/jreisinger/verify-backups',
+            bugtracker => 'https://github.com/jreisinger/verify-backups/issues',
         },
-        keywords => [ qw/ math base4 / ],
+        keywords => [ qw/ backup verify test / ],
     },
 );
 

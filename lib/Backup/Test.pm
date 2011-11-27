@@ -38,7 +38,7 @@ sub get_files {
 sub gen_md5sum {
   # Generate MD5 checksum
   my $file = shift;
-  eval { open(FILE, $file) or die "Can't open '$file': $!"; };
+  eval { open(FILE, "$file") or die "Can't open '$file': $!"; };
   return "file '$file' not backed up" if $@;
   binmode(FILE);
 
