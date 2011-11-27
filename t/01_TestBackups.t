@@ -12,7 +12,7 @@ use_ok('Backup::Test');
 my $dir = '/data/home';
 
 # Test number of returned files
-for my $percentage ( 0, 0.1, 0.3 ) {
+for my $percentage ( 0, 0.0001, 0.0003 ) {
   my @returned = Backup::Test::get_files($dir, $percentage);
   my $total_files_number = shift @returned;
   my @sample_files = @returned;
