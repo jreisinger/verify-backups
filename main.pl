@@ -2,16 +2,9 @@
 use strict;
 use warnings;
 use File::Basename;
-use Backup::Test;
+use Backup::Verify;
 
-my $verbose = 0;  # FIXME - make verbose command line option
-
-my $percentage = 0.0001; # percentage of file to check
-my %bak_dir = (
-  # dir => bak_dir
-  '/data/home/' => '/cloud_backup/hourly.0/localhost/',
-  '/data/private/' => '/cloud_backup/hourly.0/localhost/',
-);
+do "main.cfg";
 
 for my $dir ( sort keys %bak_dir ) {
   &verify_backups( $dir, $bak_dir{$dir}, $percentage );
@@ -22,7 +15,7 @@ sub verify_backups {
   my $backup_dir = shift;
   my $percentage = shift;
 
-  my @returned = Backup::Test::get_files($dir, $percentage);
+  my @returned = Backup::Verify::get_files($dir, $percentage);
   my $total_files = shift @returned;
   my @files = @returned;
 
@@ -35,7 +28,7 @@ sub verify_backups {
     my $backup_directories = $directories;
     $backup_directories =~ s#^#$backup_dir#;
     # FIXME: make '/' more portable
-    if ( Backup::Test::gen_md5sum("$directories/$filename") eq Backup::Test::gen_md5sum("$backup_directories/$filename") ) {
+    if ( Backup::Verify::gen_md5sum("$directories/$filename") eq Backup::Verify::gen_md5sum("$backup_directories/$filename") ) {
       $ok++;
     } else {
       push @not_ok, $file;
