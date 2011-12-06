@@ -1,4 +1,4 @@
-package Backup::Test;
+package Backup::Verify;
 
 use warnings;
 use strict;

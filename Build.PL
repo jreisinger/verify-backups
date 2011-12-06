@@ -3,7 +3,7 @@ use warnings;
 use Module::Build;
 
 my $builder = Module::Build->new(
-    module_name         => 'Backup::Test',
+    module_name         => 'Backup::Verify',
     license             => 'GPLv3',
     dist_author         => 'Jozef Reisinger <jozef.reisinger@gmail.com>',
     dist_version_from   => 'lib/Backup/Test.pm',
