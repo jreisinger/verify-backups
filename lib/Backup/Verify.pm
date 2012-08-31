@@ -1,16 +1,51 @@
 package Backup::Verify;
 
-use warnings;
+use 5.006;
 use strict;
+use warnings;
 use File::Find;             # core module
 use Digest::MD5;            # core module
 use List::Util qw(shuffle); # core module - to randomize list
 
+=head1 NAME
+
+Animal - The great new Animal!
+
+=head1 VERSION
+
+Version 0.010
+
+=cut
+
 our $VERSION = '0.010';
+
+=head1 SYNOPSIS
+
+Quick summary of what the module does.
+
+Perhaps a little code snippet.
+
+    use Animal;
+
+    my $foo = Animal->new();
+    ...
+
+=head1 EXPORT
+
+A list of functions that can be exported.  You can delete this section
+if you don't export anything, such as for a purely object-oriented module.
+
+=cut
 
 use vars qw($VERSION @ISA @EXPORT_OK);
 use Exporter 'import';
 our @EXPORT_OK = qw(get_files gen_md5sum);
+
+=head1 SUBROUTINES/METHODS
+
+=head2 function1
+
+=cut
 
 sub get_files {
   # return total number of files in $dir and the percentage of files
@@ -50,28 +85,63 @@ sub gen_md5sum {
   return $md5->hexdigest;
 }
 
-1;
-
-
-__END__
-
-=head1 NAME
-
-Math::Base4 - Base 4 calculations
-
-=head1 SYNOPSIS
-
-  use Math::Base4 qw(add4);
-  
-  print add4(2,2);
-  # 10
-
-=head1 DESCRIPTION
-
-FIXME please
-
 =head1 AUTHOR
 
-BA.pm
+Jozef Reisinger, C<< <jozef.reisinger at gmail.com> >>
+
+=head1 BUGS
+
+Please report any bugs or feature requests to C<bug-animal at rt.cpan.org>, or through
+the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Animal>.  I will be notified, and then you'll
+automatically be notified of progress on your bug as I make changes.
+
+
+
+
+=head1 SUPPORT
+
+You can find documentation for this module with the perldoc command.
+
+    perldoc Animal
+
+
+You can also look for information at:
+
+=over 4
+
+=item * RT: CPAN's request tracker (report bugs here)
+
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Animal>
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/dist/Animal>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/d/Animal>
+
+=item * Search CPAN
+
+L<http://search.cpan.org/dist/Animal/>
+
+=back
+
+
+=head1 ACKNOWLEDGEMENTS
+
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright 2012 Jozef Reisinger.
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
+
+See http://dev.perl.org/licenses/ for more information.
+
 
 =cut
+
+1; # End of Backup::Verify
