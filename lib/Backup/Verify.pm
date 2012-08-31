@@ -52,6 +52,8 @@ sub get_files {
   my $dir = shift;        # dir to search for files
   my $percentage = shift; # percentage of files to return
 
+  return 0 unless -d $dir and $percentage =~ /0\.\d+/;
+
   my @files;
   # get just files, not directories
   find(sub { push @files, $File::Find::name if -f; }, "$dir");
