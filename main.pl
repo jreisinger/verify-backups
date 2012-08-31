@@ -4,9 +4,8 @@ use warnings;
 use File::Basename;
 use Backup::Verify;
 
-#########################
-# Configuration section #
-#########################
+#######################
+# Configuration section
 my $verbose = 0;  # FIXME - make verbose command line option
 
 my $percentage = 0.0001; # percentage of file to check
@@ -15,11 +14,15 @@ my %bak_dir = (
   '/data/home/' => '/cloud_backup/hourly.0/localhost/',
   '/data/private/' => '/cloud_backup/hourly.0/localhost/',
 );
-#########################
 
+######
+# Main
 for my $dir ( sort keys %bak_dir ) {
   &verify_backups( $dir, $bak_dir{$dir}, $percentage );
 }
+
+###########
+# Functions
 
 sub verify_backups {
   my $dir = shift;
