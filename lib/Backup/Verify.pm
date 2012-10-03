@@ -3,9 +3,9 @@ package Backup::Verify;
 use 5.006;
 use strict;
 use warnings;
-use File::Find;             # core module
-use Digest::MD5;            # core module
-use List::Util qw(shuffle); # core module - to randomize list
+use File::Find;                # core module
+use Digest::MD5;               # core module
+use List::Util qw(shuffle);    # core module - to randomize list
 
 =head1 NAME
 
@@ -48,43 +48,48 @@ our @EXPORT_OK = qw(get_files gen_md5sum);
 =cut
 
 sub get_files {
-  # return total number of files in $dir and the percentage of files
-  my $dir = shift;        # dir to search for files
-  my $percentage = shift; # percentage of files to return
 
-  return 0 unless -d $dir and $percentage =~ /0\.\d+/;
+    # return total number of files in $dir and the percentage of files
+    my $dir        = shift;    # dir to search for files
+    my $percentage = shift;    # percentage of files to return
 
-  my @files;
-  # get just files, not directories
-  find(sub { push @files, $File::Find::name if -f; }, "$dir");
+    return 0 unless -d $dir and $percentage =~ /0\.\d+/;
 
-  # calculate the percentage
-  my $total_files_number = scalar @files;
-  my $sample_files_number = $total_files_number * $percentage;
-  
-  # get the sample files
-  my @sample_files;
-  for ( shuffle @files ) {  # randomize order of files
-    last if @sample_files >= $sample_files_number or $sample_files_number == 0;
-    push @sample_files, $_;
-  }
+    my @files;
 
-  return $total_files_number, @sample_files;
+    # get just files, not directories
+    find( sub { push @files, $File::Find::name if -f; }, "$dir" );
+
+    # calculate the percentage
+    my $total_files_number  = scalar @files;
+    my $sample_files_number = $total_files_number * $percentage;
+
+    # get the sample files
+    my @sample_files;
+    for ( shuffle @files ) {    # randomize order of files
+        last
+          if @sample_files >= $sample_files_number
+              or $sample_files_number == 0;
+        push @sample_files, $_;
+    }
+
+    return $total_files_number, @sample_files;
 }
 
 sub gen_md5sum {
-  # Generate MD5 checksum
-  my $file = shift;
-  eval { open(FILE, "$file") or die "Can't open '$file': $!"; };
-  return "file '$file' not backed up" if $@;
-  binmode(FILE);
 
-  my $md5 = Digest::MD5->new;
-  while (<FILE>) {
-    $md5->add($_);
-  }
-  close(FILE);
-  return $md5->hexdigest;
+    # Generate MD5 checksum
+    my $file = shift;
+    eval { open( FILE, "$file" ) or die "Can't open '$file': $!"; };
+    return "file '$file' not backed up" if $@;
+    binmode(FILE);
+
+    my $md5 = Digest::MD5->new;
+    while (<FILE>) {
+        $md5->add($_);
+    }
+    close(FILE);
+    return $md5->hexdigest;
 }
 
 =head1 AUTHOR
@@ -146,4 +151,4 @@ See http://dev.perl.org/licenses/ for more information.
 
 =cut
 
-1; # End of Backup::Verify
+1;    # End of Backup::Verify
