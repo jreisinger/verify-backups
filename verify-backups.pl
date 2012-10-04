@@ -10,13 +10,18 @@ use Net::SSH qw(sshopen2);
 
 my $verbose = 0;
 
-my $percentage = 0.0001;    # percentage of files to check
+my $percentage = 0.01;    # percentage of files to check
 my %bak_dir    = (
     ## dir/ => bak_dir/ (local backup)
     #'/data/home/' => '/cloud_backup/hourly.0/localhost/',
 
     ## user@machine:/dir/ => bak_dir/ (remote backup)
-    'jreisinger@10.160.76.131:/home/jreisinger/temp/' => '/data500/backup/',
+    'root@10.160.76.131:/data/IA/' =>
+      '/data500/backup/hourly.0/10.160.76.131/',
+    'root@10.160.76.131:/etc/' =>
+      '/data500/backup/hourly.0/10.160.76.131/',
+    'root@10.160.76.131:/var/spool/cron/crontabs' =>
+      '/data500/backup/hourly.0/10.160.76.131/',
 );
 
 ######
@@ -85,6 +90,9 @@ for my $dir ( sort keys %bak_dir ) {
     print "Checked $checked files out of $total_files total files for '$dir'\n";
     print "\tBacked up correctly:    $ok\n";
     print "\tBacked up in-correctly: ", scalar @not_ok, "\n";
+    for my $file ( @not_ok ) {
+        print "\t\t$file\n";
+    }
 }
 
 ###########
